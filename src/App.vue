@@ -54,7 +54,6 @@ header {
   box-sizing: border-box;
   color: #f5f5f5;
   font-weight: 400;
-  height: 6rem;
   letter-spacing: 0.02rem;
   line-height: 1.2;
   text-align: center;
@@ -62,11 +61,13 @@ header {
 footer {
   bottom: 0;
   font-size: 1rem;
+  height: 6rem;
   padding: .5rem 0;
   position: relative;
 }
 header {
   font-size: 2rem;
+  height: 4rem;
   margin-bottom: 2rem;
   padding-top: 16px;
   position: relative;

@@ -46,14 +46,6 @@
           v-bind="moneyConf"
           class="input-field-pay"
         />
-      </div><br>
-      <div class="input-container">
-        <money
-          v-model="fee"
-          v-bind="moneyConf"
-          class="input-field-pay"
-        />
-        <label for="fee">PayPal commission</label>
       </div>
     </article>
   </div>
@@ -63,8 +55,8 @@
 import { Money } from 'v-money'
 import Big from 'big.js'
 
-Big.DP = 2 // Decimal places for all calculations
-Big.RM = 2 // Round method for all calculations
+Big.DP = 3 // Decimal places for all calculations
+Big.RM = 0 // No rounding, truncate decimals for all calculations
 
 export default {
   name: 'Calculator',
@@ -86,6 +78,9 @@ export default {
     }
   },
   computed: {
+    percentageRate () {
+      return parseFloat(Big(this.percentage).div(100))
+    },
     messageSend () {
       return this.isSending ? 'If you send' : 'To receive'
     },
@@ -95,13 +90,13 @@ export default {
     recv: {
       get () {
         let send = Big(this.send)
-        let fee = Big(this.fee)
+        let fixed = Big(this.fixed)
+        let rate = Big(this.percentageRate)
         return parseFloat(
           this.isSending
-            ? send.gt(fee)
-              ? send.minus(fee)
-              : 0
-            : send.plus(fee))
+            ? send.minus(this.fee > 0 ? this.fee : 0)
+            : send.plus(fixed).div(Big(1).minus(rate))
+        )
       },
       set (v) {} // Computed property setter necessary
     },
@@ -109,23 +104,12 @@ export default {
       get () {
         let send = Big(this.send)
         let fixed = Big(this.fixed)
-        let percentage = Big(this.isSending ? this.percentage : 5.8)
-        let adjust = this.isSending
-          ? 0
-          : send.lt(5)
-            ? Big(-0.02)
-            : send.lt(15)
-              ? Big(-0.01)
-              : Big(-0.01).times([...this.send.toString()][0] - 1)
-        let total = this.send
-          ? parseFloat(
-            send.times(percentage)
-              .div(100)
-              .plus(fixed)
-              .plus(adjust)
-              .plus(!this.isSending && send.lt(16) ? 0.01 : 0))
-          : 0
-        return total
+        let rate = Big(this.percentageRate)
+        return parseFloat(
+          this.send
+            ? send.times(rate).plus(fixed)
+            : 0
+        )
       },
       set (v) {} // Computed property setter necessary
     }
@@ -167,9 +151,11 @@ img {
 }
 .input-field-calc, .input-field-pay {
   background-color: #F0F0F0;
+  color: #0044aa;
   outline: none;
   border: 0;
   border-radius: .5rem;
+  margin: .5rem 0;
   text-align: center;
 }
 .input-field-calc {
