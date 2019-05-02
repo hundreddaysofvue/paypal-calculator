@@ -24,7 +24,7 @@ This project also belongs to #100DaysOfVue initiative.
 8. How to setup PWA manifest.json [properties](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 9. PWA only suports relative routing down where `manifest.json` file goes (I recommend you put into the root of your project... _PLEASE!_).
 10. How to setup spaced tabs on Vim editor.
-11. `v-model` combines actions for two properties by default: `:value` and `:input`, for form inputs. If a computed value does not have to be mutated, you don't need to declare v-model, but you can declare just `:value` property instead (Thanks a lot, [@gustojs](https://twitter.com/gustojs))
+11. `v-model` on HTML form inputs combines by default, the `:value` property and the `:input` event. If a computed value does not have to be mutated (so, `input` event does not trigger), you don't need to declare `v-model`, but you can declare just `:value` property instead (Thanks a lot, [@gustojs](https://twitter.com/gustojs))
 
 ## Project setup
 ```
