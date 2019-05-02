@@ -19,11 +19,12 @@ This project also belongs to #100DaysOfVue initiative.
 3. Computed properties only make sense when they depend on another property.
 4. [Props](https://vuejs.org/v2/guide/migration.html#Prop-Mutation-deprecated) _MUST_ be inmutable [by definition](https://stackoverflow.com/questions/39868963/vue-2-mutating-props-vue-warn), and only can be mutated by parent components.
 5. If a prop needs to be mutated, then you _SHOULD_ use a computed property with a shallow copy of the prop value _OR_ you can change it as a [data property](https://vuejs.org/v2/guide/instance.html#Data-and-Methods).
-5. Javascript sucks when it comes to maths (such as rounding numbers and currency operations).
-6. [Standard.js](https://standardjs.com/) linter rules.
-7. How to setup PWA manifest.json [properties](https://developer.mozilla.org/en-US/docs/Web/Manifest).
-8. PWA only suports relative routing down where `manifest.json` file goes (I recommend you put into the root of your project... _PLEASE!_).
-9. How to setup spaced tabs on Vim editor.
+6. Javascript sucks when it comes to maths (such as rounding numbers and currency operations).
+7. [Standard.js](https://standardjs.com/) linter rules.
+8. How to setup PWA manifest.json [properties](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+9. PWA only suports relative routing down where `manifest.json` file goes (I recommend you put into the root of your project... _PLEASE!_).
+10. How to setup spaced tabs on Vim editor.
+11. `v-model` combines actions for two properties by default: `:value` and `:input`, for form inputs. If a computed value does not have to be mutated, you don't need to declare v-model, but you can declare just `:value` property instead (Thanks a lot, [@gustojs](https://twitter.com/gustojs))
 
 ## Project setup
 ```
