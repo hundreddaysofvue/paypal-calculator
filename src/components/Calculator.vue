@@ -42,9 +42,10 @@
       <div class="input-container">
         <label for="receive">{{ messageRecv }}</label>
         <money
-          v-model="recv"
+          :value="recv"
           v-bind="moneyConf"
           class="input-field-pay"
+          disabled
         />
       </div>
     </article>
@@ -87,31 +88,25 @@ export default {
     messageRecv () {
       return this.isSending ? 'They will receive' : 'They need to send'
     },
-    recv: {
-      get () {
-        let send = Big(this.send)
-        let fixed = Big(this.fixed)
-        let rate = Big(this.percentageRate)
-        return parseFloat(
-          this.isSending
-            ? send.minus(this.fee > 0 ? this.fee : 0)
-            : send.plus(fixed).div(Big(1).minus(rate))
-        )
-      },
-      set (v) {} // Computed property setter necessary
+    recv () {
+      let send = Big(this.send)
+      let fixed = Big(this.fixed)
+      let rate = Big(this.percentageRate)
+      return parseFloat(
+        this.isSending
+          ? send.minus(this.fee > 0 ? this.fee : 0)
+          : send.plus(fixed).div(Big(1).minus(rate))
+      )
     },
-    fee: {
-      get () {
-        let send = Big(this.send)
-        let fixed = Big(this.fixed)
-        let rate = Big(this.percentageRate)
-        return parseFloat(
-          this.send
-            ? send.times(rate).plus(fixed)
-            : 0
-        )
-      },
-      set (v) {} // Computed property setter necessary
+    fee () {
+      let send = Big(this.send)
+      let fixed = Big(this.fixed)
+      let rate = Big(this.percentageRate)
+      return parseFloat(
+        this.send
+          ? send.times(rate).plus(fixed)
+          : 0
+      )
     }
   },
   methods: {
